@@ -1,5 +1,5 @@
 import React from "react";
-import nodisponibleImg from "../assets/nodisponible.png";
+import nodisponibleImg from "../../assets/nodisponible.png";
 
 const ModalProducto = ({ modalData, cerrarModal, agregarAlCarrito }) => {
     if (!modalData) return null;

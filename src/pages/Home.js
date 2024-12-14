@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 import "../styles/home.css";
 import "../styles/barraCarga.css";
 import servicioProductos from "../components/servicios/Productos";
-import ModalProducto from "../components/ModalProducto";
+import ModalProducto from "../components/home/ModalProducto";
 import ProductCard from "../components/home/ProductCard";
 import HeroSection from "../components/home/HeroSection";
 import LoadingSpinner from "../components/home/LoadingSpinner";
-import useFetchAnuncios from "../components/useFetchAnuncios";
+import useFetchAnuncios from "../components/home/useFetchAnuncios";
 import nodisponibleImg from "../assets/nodisponible.png";
 
 const Home = () => {
