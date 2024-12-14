@@ -4,11 +4,12 @@ import "../styles/home.css";
 import "../styles/barraCarga.css";
 import servicioProductos from "../components/Productos";
 import ModalProducto from "../components/ModalProducto";
+import ProductCard from "../components/ProductCard";
+import HeroSection from "../components/HeroSection";
 import nodisponibleImg from "../assets/nodisponible.png";
 
 const Home = () => {
     // Estados
-    const [indiceActual, setIndiceActual] = useState(0);
     const [modalData, setModalData] = useState(null);
     const [productos, setProductos] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -53,14 +54,6 @@ const Home = () => {
         fetchProductos();
     }, []);
 
-    // Cambiar anuncio automáticamente
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setIndiceActual((prev) => (prev + 1) % anuncios.length);
-        }, 3000);
-
-        return () => clearInterval(interval);
-    }, [anuncios.length]);
 
     // Función para mostrar el modal
     const mostrarModal = (producto) => {
@@ -108,44 +101,20 @@ const Home = () => {
 
     return (
         <main className="home">
-            <section className="hero-section">
-                <div className="hero-content">
-                    <h2>{anuncios[indiceActual].texto}</h2>
-                    <img
-                        src={anuncios[indiceActual].imagen}
-                        alt="Anuncio"
-                        onError={(e) => (e.target.src = nodisponibleImg)}
-                    />
-                    <button className="cta-button">Comprar ahora</button>
-                </div>
-            </section>
+            <HeroSection anuncios={anuncios} /> 
+
 
             <section className="products-section">
                 <h3>¡Productos destacados!</h3>
                 <div className="product-grid">
                     {productos.map((producto) => (
-                        <div key={producto.id} className="product-card">
-                            <img
-                                src={producto.foto || nodisponibleImg}
-                                alt={producto.nombre}
-                                onError={(e) => (e.target.src = nodisponibleImg)}
-                            />
-                            <h4>{producto.nombre}</h4>
-                            <p>{producto.marca}</p>
-                            <p>${producto.precio}</p>
-                            <button
-                                className="buy-button"
-                                onClick={() => mostrarModal(producto)}
-                            >
-                                Ver detalles
-                            </button>
-                            <button
-                                className="cta-button"
-                            >
-                                Comprar
-                            </button>
-                        </div>
+                        <ProductCard 
+                            key={producto.id}
+                            producto={producto}
+                            mostrarModal={mostrarModal}
+                        />
                     ))}
+
                 </div>
             </section>
 
