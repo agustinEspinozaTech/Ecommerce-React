@@ -1,25 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import "../styles/home.css";
 import "../styles/barraCarga.css";
-import servicioProductos from "../components/Productos"; 
+import servicioProductos from "../components/Productos";
+import ModalProducto from "../components/ModalProducto";
 import nodisponibleImg from "../assets/nodisponible.png";
 
 const Home = () => {
     // Estados
     const [indiceActual, setIndiceActual] = useState(0);
     const [modalData, setModalData] = useState(null);
-    const [productos, setProductos] = useState([]); 
+    const [productos, setProductos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [anuncios, setAnuncios] = useState([]);
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
     // Anuncios dinámicos
     useEffect(() => {
         const fetchAnuncios = async () => {
             try {
                 const data = await servicioProductos.getAll();
-                const primerosProductos = data.slice(0, 5); 
+                const primerosProductos = data.slice(0, 5);
                 setAnuncios(
                     [
                         { texto: `Descuento especial en ${primerosProductos[0]?.nombre || "calzados"}.`, imagen: primerosProductos[0]?.foto || nodisponibleImg },
@@ -40,12 +41,12 @@ const Home = () => {
     useEffect(() => {
         const fetchProductos = async () => {
             try {
-                const data = await servicioProductos.getAll(); 
-                setProductos(data); 
+                const data = await servicioProductos.getAll();
+                setProductos(data);
             } catch (error) {
                 console.error("Error al cargar los productos:", error);
             } finally {
-                setLoading(false); 
+                setLoading(false);
             }
         };
 
@@ -89,8 +90,8 @@ const Home = () => {
             }
 
             localStorage.setItem("carrito", JSON.stringify(carritoActual));
-            cerrarModal(); 
-            navigate("/carrito"); 
+            cerrarModal();
+            navigate("/carrito");
         } catch (error) {
             console.error("Error al agregar el producto al carrito:", error);
         }
@@ -100,7 +101,7 @@ const Home = () => {
         return (
             <div className="loading-container">
                 <h1>Cargando productos...</h1>
-                <div className="loading-circle"></div> 
+                <div className="loading-circle"></div>
             </div>
         );
     }
@@ -125,7 +126,7 @@ const Home = () => {
                     {productos.map((producto) => (
                         <div key={producto.id} className="product-card">
                             <img
-                                src={producto.foto || nodisponibleImg} 
+                                src={producto.foto || nodisponibleImg}
                                 alt={producto.nombre}
                                 onError={(e) => (e.target.src = nodisponibleImg)}
                             />
@@ -148,44 +149,11 @@ const Home = () => {
                 </div>
             </section>
 
-            {modalData && (
-                <div className="modal" onClick={cerrarModal}>
-                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <span className="close" onClick={cerrarModal}>
-                            &times;
-                        </span>
-                        <img
-                            src={modalData.foto || nodisponibleImg}
-                            alt={modalData.nombre}
-                            onError={(e) => (e.target.src = nodisponibleImg)}
-                        />
-                        <h2>{modalData.nombre}</h2>
-                        <p>{modalData.descCorta}</p>
-                        <p>
-                            <strong>Stock:</strong> {modalData.stock}
-                        </p>
-                        <p>
-                            <strong>Precio:</strong> {modalData.precio}
-                        </p>
-                        <p>
-                            <strong>Marca:</strong> {modalData.marca}
-                        </p>
-                        <p>
-                            <strong>Categoria:</strong> {modalData.categoria}
-                        </p>
-                       
-                        <button
-                            className="carrito"
-                            onClick={(e) => {
-                                e.stopPropagation(); 
-                                agregarAlCarrito(modalData);
-                            }}
-                        >
-                            Agregar al carrito
-                        </button>
-                    </div>
-                </div>
-            )}
+            <ModalProducto
+                modalData={modalData}
+                cerrarModal={cerrarModal}
+                agregarAlCarrito={agregarAlCarrito}
+            />
         </main>
     );
 };
