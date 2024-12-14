@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../styles/formularios.css";
-import servicioProductos from '../components/servicios/Productos'; 
+import servicioProductos from '../components/servicios/Productos';
+import InputField from '../components/alta/InputField';
+import SelectField from '../components/alta/SelectField';
+import TextAreaField from '../components/alta/TextAreaField';
+import CheckboxField from '../components/alta/CheckboxField';
+import NumberField from '../components/alta/NumberField';
+import UrlField from '../components/alta/UrlField';
+import SubmiButton from '../components/alta/SubmiButton';
 
 function Alta() {
   const [nombre, setNombre] = useState('');
@@ -245,7 +252,7 @@ function Alta() {
 
       try {
         setIsLoading(true); // Iniciar estado de carga
-        setApiError(''); 
+        setApiError('');
 
         // Llamar a la API para guardar el producto
         await servicioProductos.guardar(nuevoProducto);
@@ -271,18 +278,14 @@ function Alta() {
           <h2>Alta de Producto</h2>
         </div>
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="nombre">Nombre:</label>
-            <input
-              autoComplete="off"
-              type="text"
-              id="nombre"
-              name="nombre"
-              value={nombre}
-              onChange={handleNombreChange}
-            />
-            {nombreError && <div style={{ color: 'red' }}>{nombreError}</div>}
-          </div>
+          <InputField
+            id="nombre"
+            label="Nombre"
+            value={nombre}
+            onChange={handleNombreChange}
+            error={nombreError}
+          />
+
 
           <div className="form-group">
             <label htmlFor="precio">Precio:</label>
@@ -323,114 +326,62 @@ function Alta() {
             {marcaError && <div style={{ color: 'red' }}>{marcaError}</div>}
           </div>
 
-          <div className="form-group">
-            <label htmlFor="categoria">Categoría:</label>
-            <select
-              id="categoria"
-              name="categoria"
-              value={categoria}
-              onChange={handleCategoriaChange}
-            >
-              <option value="">Seleccioná una categoría</option>
-              <option value="Tecnología">Tecnología</option>
-              <option value="Ropa y accesorios">Ropa y accesorios</option>
-              <option value="Hogar y decoración">Hogar y decoración</option>
-              <option value="Juguetes">Juguetes</option>
-              <option value="Calzado">Calzado</option>
-            </select>
-            {categoriaError && (
-              <div style={{ color: 'red' }}>{categoriaError}</div>
-            )}
-          </div>
+          <SelectField
+            id="categoria"
+            label="Categoría"
+            value={categoria}
+            onChange={handleCategoriaChange}
+            options={['Tecnología', 'Ropa y accesorios', 'Hogar y decoración', 'Juguetes', 'Calzado']}
+            error={categoriaError}
+          />
+          <TextAreaField
+            id="descCorta"
+            label="Descripción corta"
+            value={descCorta}
+            onChange={handleDescCortaChange}
+            error={descCortaError}
+          />
+          <TextAreaField
+            id="descLarga"
+            label="Descripción larga"
+            value={descLarga}
+            onChange={handleDescLargaChange}
+            error={descLargaError}
+          />
+          <CheckboxField
+            id="envio"
+            label="Envío sin cargo"
+            checked={envio}
+            onChange={handleEnvioChange}
+          />
+          <NumberField
+            id="edadDesde"
+            label="Edad desde"
+            value={edadDesde}
+            onChange={handleEdadDesdeChange}
+            error={edadDesdeError}
+            min={18}
+            max={150}
+          />
+          <NumberField
+            id="edadHasta"
+            label="Edad hasta"
+            value={edadHasta}
+            onChange={handleEdadHastaChange}
+            error={edadHastaError}
+            min={18}
+            max={150}
+          />
+          <UrlField
+            id="foto"
+            label="Imagen del producto"
+            value={foto}
+            onChange={handleFotoChange}
+            error={fotoError}
+            placeholder="Ingresá la url de la imagen"
+          />
+          <SubmiButton isLoading={isLoading} label="Agregar Producto" />
 
-          <div className="form-group">
-            <label htmlFor="descCorta">Descripción corta:</label>
-            <textarea
-              id="descCorta"
-              name="descCorta"
-              value={descCorta}
-              onChange={handleDescCortaChange}
-            ></textarea>
-            {descCortaError && (
-              <div style={{ color: 'red' }}>{descCortaError}</div>
-            )}
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="descLarga">Descripción larga:</label>
-            <textarea
-              id="descLarga"
-              name="descLarga"
-              value={descLarga}
-              onChange={handleDescLargaChange}
-            ></textarea>
-            {descLargaError && (
-              <div style={{ color: 'red' }}>{descLargaError}</div>
-            )}
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="envio">Envío sin cargo:</label>
-            <input
-              type="checkbox"
-              id="envio"
-              name="envio"
-              checked={envio}
-              onChange={handleEnvioChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="edadDesde">Edad desde:</label>
-            <input
-              type="number"
-              id="edadDesde"
-              name="edadDesde"
-              value={edadDesde}
-              onChange={handleEdadDesdeChange}
-            />
-            {edadDesdeError && (
-              <div style={{ color: 'red' }}>{edadDesdeError}</div>
-            )}
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="edadHasta">Edad hasta:</label>
-            <input
-              type="number"
-              id="edadHasta"
-              name="edadHasta"
-              value={edadHasta}
-              onChange={handleEdadHastaChange}
-            />
-            {edadHastaError && (
-              <div style={{ color: 'red' }}>{edadHastaError}</div>
-            )}
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="foto">Imagen del producto:</label>
-            <input
-              autoComplete="off"
-              placeholder="Ingresá la url de la imagen"
-              type="url"
-              id="foto"
-              name="foto"
-              accept="image/*"
-              value={foto}
-              onChange={handleFotoChange}
-            />
-            {fotoError && <div style={{ color: 'red' }}>{fotoError}</div>}
-          </div>
-          {apiError && <div style={{ color: 'red', marginBottom: '10px' }}>{apiError}</div>}
-
-          {/* Carga */}
-          {isLoading && <div>Guardando producto...</div>}
-
-          {/* Boton de Envío */}
-          <button type="submit" disabled={isLoading}>
-            {isLoading ? 'Guardando...' : 'Agregar Producto'}
-          </button>
         </form>
       </section>
     </main>
