@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans&display=swap');
+
+:root {
+    --color-fondo: #F4F4F4;
+    --color-fondo-header: #F4F4F4;
+    --color-footer: #333;
+    --color-texto: #333;
+    --color-link: #0069B9;
+    --color-nav-fondo: #4a4747;
+    --color-nav-texto: #fff;
+    --color-blanco: #fff;
+    --color-modal-fondo: rgba(0, 0, 0, 0.5);
+    --color-boton-hover: #045B9E;
+    --border-color: #ccc;
+    --light-gray: #ccc;
+    --primary-color: #0069B9;
+    --primary-hover-color: #045b9e;
+
+    --fuente-principal: 'DM Sans', sans-serif;
+
+    --padding-small: 10px;
+    --padding-medium: 20px;
+    --padding-large: 40px;
+    --font-size-base: 16px;
+    --font-size-header: 14px;
+    --font-size-footer: 14px;
+    --font-size-nav: 16px;
+    --font-size-p: 1.2em;
+    --font-size-p-responsive: 1em;
+    --font-size-h2: 2em;
+    --font-size-h2-responsive: 1.5em;
+    --font-size-large: 20px;
+
+    --border-radius: 5px;
+
+    --box-shadow-color: rgba(0, 0, 0, 0.1);
+    --sombra-box: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --sombra-modal: 0 5px 15px rgba(0, 0, 0, 0.3);
+    --sombra-card: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

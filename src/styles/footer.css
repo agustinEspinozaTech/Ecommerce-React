@@ -1,0 +1,20 @@
+@import url('./variables.css');
+
+
+footer {
+    background-color: var(--color-texto);
+    color: var(--color-blanco);
+    text-align: center;
+    padding: var(--padding-medium);
+    font-size: var(--font-size-footer);
+}
+
+footer p {
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    footer {
+        font-size: 12px;
+    }
+}

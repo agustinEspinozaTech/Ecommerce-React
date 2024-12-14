@@ -1,0 +1,61 @@
+@import url('./variables.css');
+
+main .nosotros {
+    flex-grow: 1;
+    padding: var(--padding-large) var(--padding-medium);
+    background-color: var(--color-blanco);
+    text-align: center;
+}
+
+main .nosotros section {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--padding-medium);
+    background-color: var(--color-blanco);
+    box-shadow: var(--sombra-box);
+    border-radius: var(--border-radius);
+}
+
+main .nosotros > section > div > p {
+    text-align: justify;
+}
+
+h2 {
+    font-size: var(--font-size-h2);
+    margin-bottom: var(--padding-small);
+    color: var(--color-texto);
+}
+
+p {
+    font-size: var(--font-size-p);
+    margin-bottom: var(--padding-small);
+    line-height: 1.6;
+}
+
+.seccion {
+    display: none;
+}
+
+.seccion.activa {
+    display: block;
+}
+
+#navegacion {
+    text-align: center;
+    margin-top: var(--padding-medium);
+}
+
+#navegacion button {
+    padding: var(--padding-small) 20px;
+    background-color: var(--color-link);
+    color: var(--color-blanco);
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    margin: 0 10px;
+    transition: background-color 0.3s ease;
+}
+
+#navegacion button:hover {
+    background-color: var(--color-boton-hover);
+}
