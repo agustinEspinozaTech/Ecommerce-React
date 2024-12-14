@@ -1,5 +1,5 @@
 import React from "react";
-import nodisponibleImg from "../assets/nodisponible.png";
+import nodisponibleImg from "../../assets/nodisponible.png";
 
 const ProductCard = ({ producto, mostrarModal }) => {
     return (

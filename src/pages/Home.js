@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/home.css";
 import "../styles/barraCarga.css";
-import servicioProductos from "../components/Productos";
+import servicioProductos from "../components/servicios/Productos";
 import ModalProducto from "../components/ModalProducto";
-import ProductCard from "../components/ProductCard";
-import HeroSection from "../components/HeroSection";
+import ProductCard from "../components/home/ProductCard";
+import HeroSection from "../components/home/HeroSection";
+import LoadingSpinner from "../components/home/LoadingSpinner";
+import useFetchAnuncios from "../components/useFetchAnuncios";
 import nodisponibleImg from "../assets/nodisponible.png";
 
 const Home = () => {
@@ -13,31 +15,11 @@ const Home = () => {
     const [modalData, setModalData] = useState(null);
     const [productos, setProductos] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [anuncios, setAnuncios] = useState([]);
     const navigate = useNavigate();
 
     // Anuncios dinámicos
-    useEffect(() => {
-        const fetchAnuncios = async () => {
-            try {
-                const data = await servicioProductos.getAll();
-                const primerosProductos = data.slice(0, 5);
-                setAnuncios(
-                    [
-                        { texto: `Descuento especial en ${primerosProductos[0]?.nombre || "calzados"}.`, imagen: primerosProductos[0]?.foto || nodisponibleImg },
-                        { texto: `Envío gratis en compras mayores a $50.000,00. Descubre ${primerosProductos[1]?.nombre || "nuestros productos"}.`, imagen: primerosProductos[1]?.foto || nodisponibleImg },
-                        { texto: `Hasta 12 cuotas sin interés en toda la colección de ${primerosProductos[2]?.nombre || "ropa"}.`, imagen: primerosProductos[2]?.foto || nodisponibleImg },
-                        { texto: `Rebajas imperdibles: 30% de descuento en ${primerosProductos[3]?.nombre || "electrodomésticos seleccionados"}.`, imagen: primerosProductos[3]?.foto || nodisponibleImg },
-                        { texto: `Compra hoy y paga en 6 cuotas sin interés en ${primerosProductos[4]?.nombre || "juguetes"}.`, imagen: primerosProductos[4]?.foto || nodisponibleImg },
-                    ]
-                );
-            } catch (error) {
-                console.error("Error al cargar los anuncios:", error);
-            }
-        };
+    const anuncios = useFetchAnuncios(servicioProductos, nodisponibleImg); 
 
-        fetchAnuncios();
-    }, []);
 
     useEffect(() => {
         const fetchProductos = async () => {
@@ -91,13 +73,9 @@ const Home = () => {
     };
 
     if (loading) {
-        return (
-            <div className="loading-container">
-                <h1>Cargando productos...</h1>
-                <div className="loading-circle"></div>
-            </div>
-        );
+        return <LoadingSpinner mensaje="Cargando productos..." />; 
     }
+    
 
     return (
         <main className="home">

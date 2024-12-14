@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import nodisponibleImg from "../assets/nodisponible.png";
+import nodisponibleImg from "../../assets/nodisponible.png";
 
 const HeroSection = ({ anuncios }) => {
     const [indiceActual, setIndiceActual] = useState(0);

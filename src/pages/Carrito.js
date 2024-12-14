@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../styles/carrito.css";
 import nodisponibleImg from "../assets/nodisponible.png";
-import servicioCarrito from "../components/ServicioCarrito";
+import servicioCarrito from "../components/servicios/ServicioCarrito";
 
 const Carrito = () => {
     const [carritoProductos, setCarritoProductos] = useState([]);

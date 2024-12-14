@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../styles/formularios.css";
-import servicioProductos from '../components/Productos'; 
+import servicioProductos from '../components/servicios/Productos'; 
 
 function Alta() {
   const [nombre, setNombre] = useState('');
