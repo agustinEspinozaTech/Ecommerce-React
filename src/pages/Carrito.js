@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "../styles/carrito.css";
 import nodisponibleImg from "../assets/nodisponible.png";
-import MensajeExito from '../components/MensajeExitoso';
-import ModalConfirmacion from '../components/ModalConfirmacion';
-import ModalInformativo from '../components/ModalInformativo';
+import MensajeExito from '../components/modales/MensajeExitoso';
+import ModalConfirmacion from '../components/modales/ModalConfirmacion';
+import ModalInformativo from '../components/modales/ModalInformativo';
 
 
 const Carrito = () => {
@@ -86,7 +86,7 @@ const Carrito = () => {
         setCarritoProductos([]);
         localStorage.removeItem("carrito");
         cerrarModal();
-        mostrarMensaje("Se ha vaciado el carrito de compra.");
+        mostrarMensaje("Se ha vaciado el carrito de compra");
     };
 
     // Realizar la compra
@@ -150,6 +150,7 @@ const Carrito = () => {
                                             type="number"
                                             value={producto.cantidad}
                                             onChange={(e) => editarCantidad(index, e.target.value)}
+                                            disabled
                                         />
                                         <button onClick={() => incrementarCantidad(index)}
                                             disabled={producto.cantidad >= producto.stock}
@@ -174,7 +175,7 @@ const Carrito = () => {
                         <button onClick={abrirModalVaciarCarrito} className="clear-button">
                             Vaciar Carrito
                         </button>
-                        <button onClick={abrirModalInformativo} className="cta-button">
+                        <button onClick={abrirModalInformativo} className="cta-button-carrito">
                             Realizar Compra
                         </button>
                     </>

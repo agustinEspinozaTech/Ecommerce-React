@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../styles/modalConfirmacion.css'; 
+import '../../styles/modalConfirmacion.css'; 
 
 function ModalConfirmacion({ visible, titulo, mensaje, onConfirmar, onCancelar }) {
   if (!visible) return null;

@@ -4,8 +4,8 @@ class Validaciones {
     static validacionInputStock = /^[1-9]\d*$/;
     static validacionInputEdad = /^(1[89]|[2-9]\d|1[0-4]\d|150)$/;
     static validacionInputMarca = /^(?!\s*$).{1,100}$/;
-    static validacionInputDescCorta = /^[^\s][\s\S]{10,25}$/;
-    static validacionInputDescLarga = /^[^\s][\s\S]{15,30}$/;
+    static validacionInputDescCorta = /^[^\s][\s\S]{25,50}$/;
+    static validacionInputDescLarga = /^[^\s][\s\S]{10,80}$/;
     static validacionInputURL = /^(ftp|http|https):\/\/[^ "]+$/;
   
     static validarNombre(value, setError) {
@@ -55,7 +55,7 @@ class Validaciones {
   
     static validarDescCorta(value, setError) {
       if (!this.validacionInputDescCorta.test(value)) {
-        setError('Debe contener entre 10 y 25 caracteres.');
+        setError('Debe contener entre 25 y 50 caracteres.');
         return false;
       }
       setError('');
@@ -64,7 +64,7 @@ class Validaciones {
   
     static validarDescLarga(value, setError) {
       if (!this.validacionInputDescLarga.test(value)) {
-        setError('Debe contener entre 15 y 30 caracteres.');
+        setError('Debe contener entre 10 y 80 caracteres.');
         return false;
       }
       setError('');

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../styles/modalInformativo.css'; 
-import tool from "../assets/tool.png";
+import '../../styles/modalInformativo.css'; 
+import tool from "../../assets/tool.png";
 
 function ModalInformativo({ visible, onClose }) {
   if (!visible) return null;

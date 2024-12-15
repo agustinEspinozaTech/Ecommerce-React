@@ -39,7 +39,7 @@ const ModalProducto = ({ modalData, cerrarModal, agregarAlCarrito }) => {
                     <strong>Stock:</strong> {stock}
                 </p>
                 <p>
-                    <strong>Precio:</strong> {modalData.precio.toLocaleString('es-ES')}
+                    <strong>Precio:</strong> ${modalData.precio.toLocaleString('es-ES')}
                 </p>
                 <p>
                     <strong>Marca:</strong> {modalData.marca}

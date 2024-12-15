@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import nodisponibleImg from "../../assets/nodisponible.png";
-import ModalInformativo from '../ModalInformativo';
+import ModalInformativo from '../modales/ModalInformativo';
 const HeroSection = ({ anuncios }) => {
     const [indiceActual, setIndiceActual] = useState(0);
     const [modalVisible, setModalVisible] = useState(false);

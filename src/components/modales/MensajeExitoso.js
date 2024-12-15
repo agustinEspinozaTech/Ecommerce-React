@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../styles/mensajeExitoso.css';
+import '../../styles/mensajeExitoso.css';
 
 function MensajeExito({ mensaje, visible }) {
     return (

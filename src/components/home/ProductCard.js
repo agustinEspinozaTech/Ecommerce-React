@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ModalInformativo from '../ModalInformativo';
+import ModalInformativo from '../modales/ModalInformativo';
 import nodisponibleImg from "../../assets/nodisponible.png";
 
 const ProductCard = ({ producto, mostrarModal }) => {

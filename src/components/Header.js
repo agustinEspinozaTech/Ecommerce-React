@@ -4,7 +4,7 @@ import logo from '../assets/logo.jpg';
 import iniciarSesionIcon from '../assets/iniciarsesion.png';
 import carritoIcon from '../assets/carrito.png';
 import '../styles/header.css';
-import ModalInformativo from './ModalInformativo';
+import ModalInformativo from './modales/ModalInformativo';
 
 const Header = () => {
   const [modalVisible, setModalVisible] = useState(false);

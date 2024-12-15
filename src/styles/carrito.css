@@ -93,7 +93,7 @@ main{
     font-size: 16px;
 }
 
-.realizar-compra, .clear-button {
+.realizar-compra, .clear-button, .cta-button-carrito {
     display: inline-block;
     margin: 20px auto;
     padding: var(--padding-small) 20px;

@@ -7,7 +7,7 @@ import ProductCard from "../components/home/ProductCard";
 import HeroSection from "../components/home/HeroSection";
 import LoadingSpinner from "../components/home/LoadingSpinner";
 import useFetchAnuncios from "../components/home/useFetchAnuncios";
-import MensajeExito from '../components/MensajeExitoso';
+import MensajeExito from '../components/modales/MensajeExitoso';
 import nodisponibleImg from "../assets/nodisponible.png";
 
 const Home = () => {

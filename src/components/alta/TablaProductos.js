@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import servicioProductos from '../servicios/Productos';
-import MensajeExito from '../MensajeExitoso';
-import ModalConfirmacion from '../ModalConfirmacion';
+import MensajeExito from '../modales/MensajeExitoso';
+import ModalConfirmacion from '../modales/ModalConfirmacion';
 import '../../styles/tablaProductos.css';
 
 function TablaProductos() {
@@ -75,7 +75,7 @@ function TablaProductos() {
               <tr key={producto.id}>
                 <td>{producto.id}</td>
                 <td>{producto.nombre}</td>
-                <td>{producto.precio}</td>
+                <td>${producto.precio.toLocaleString('es-ES')}</td>
                 <td>{producto.stock}</td>
                 <td>{producto.marca}</td>
                 <td>{producto.categoria}</td>
