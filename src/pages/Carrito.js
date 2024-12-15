@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from "react";
 import "../styles/carrito.css";
 import nodisponibleImg from "../assets/nodisponible.png";
-import servicioCarrito from "../components/servicios/ServicioCarrito";
+import MensajeExito from '../components/MensajeExitoso';
+import ModalConfirmacion from '../components/ModalConfirmacion';
+import ModalInformativo from '../components/ModalInformativo';
+
 
 const Carrito = () => {
     const [carritoProductos, setCarritoProductos] = useState([]);
+    const [mensajeVisible, setMensajeVisible] = useState(false);
+    const [mensaje, setMensaje] = useState("");
+    const [modalVisible, setModalVisible] = useState(false);
+    const [modalInformativoVisible, setModalInformativoVisible] = useState(false);
+
 
     // Cargar productos
     useEffect(() => {
@@ -34,7 +42,7 @@ const Carrito = () => {
     // Incrementar la cantidad de un producto
     const incrementarCantidad = (index) => {
         const nuevoCarrito = [...carritoProductos];
-        if (nuevoCarrito[index].cantidad < nuevoCarrito[index].stock) { // "tenes que agregar esto"
+        if (nuevoCarrito[index].cantidad < nuevoCarrito[index].stock) { 
             nuevoCarrito[index].cantidad += 1;
             nuevoCarrito[index].subtotal = nuevoCarrito[index].cantidad * nuevoCarrito[index].precio;
             actualizarCarrito(nuevoCarrito);
@@ -60,34 +68,59 @@ const Carrito = () => {
         actualizarCarrito(nuevoCarrito);
     };
 
+    const mostrarMensaje = (mensaje) => {
+        setMensaje(mensaje);
+        setMensajeVisible(true);
+        setTimeout(() => setMensajeVisible(false), 3000);
+    };
+
     // Eliminar un producto del carrito
     const eliminarProducto = (index) => {
         const nuevoCarrito = carritoProductos.filter((_, i) => i !== index);
         actualizarCarrito(nuevoCarrito);
+        mostrarMensaje("Se ha eliminado el producto del carrito de compra.");
     };
 
     // Vaciar todo el carrito
     const vaciarCarrito = () => {
         setCarritoProductos([]);
         localStorage.removeItem("carrito");
+        cerrarModal();
+        mostrarMensaje("Se ha vaciado el carrito de compra.");
     };
 
     // Realizar la compra
-    const realizarCompra = async () => {
-        try {
-            const pedido = { productos: carritoProductos, fecha: new Date().toISOString() };
-            const respuesta = await servicioCarrito.enviar(pedido);
-            console.log("Compra realizada:", respuesta);
-            alert("Compra realizada con éxito.");
-            vaciarCarrito();
-        } catch (error) {
-            console.error("Error al realizar la compra:", error);
-            alert("Ocurrió un error al realizar la compra.");
-        }
+    const abrirModalInformativo = () => {
+        setModalInformativoVisible(true);
     };
+
+    const cerrarModalInformativo = () => {
+        setModalInformativoVisible(false);
+    };
+
+    const abrirModalVaciarCarrito = () => {
+        setModalVisible(true);
+    };
+
+    const cerrarModal = () => {
+        setModalVisible(false);
+    };
+
 
     return (
         <main className="main-carrito">
+            <MensajeExito mensaje={mensaje} visible={mensajeVisible} />
+            <ModalConfirmacion
+                visible={modalVisible}
+                titulo="Confirmar"
+                mensaje="¿Estás seguro que deseas vaciar el carrito de compra?"
+                onConfirmar={vaciarCarrito}
+                onCancelar={cerrarModal}
+            />
+             <ModalInformativo
+                visible={modalInformativoVisible}
+                onClose={cerrarModalInformativo}
+            />
             <section className="carrito-products-section">
                 <h3>Carrito de Compra</h3>
                 {carritoProductos.length === 0 ? (
@@ -121,8 +154,8 @@ const Carrito = () => {
                                         <button onClick={() => incrementarCantidad(index)}
                                             disabled={producto.cantidad >= producto.stock}
                                             style={{
-                                                opacity: producto.cantidad >= producto.stock ? 0.5 : 1, 
-                                                cursor: producto.cantidad >= producto.stock ? 'not-allowed' : 'pointer', 
+                                                opacity: producto.cantidad >= producto.stock ? 0.5 : 1,
+                                                cursor: producto.cantidad >= producto.stock ? 'not-allowed' : 'pointer',
                                             }}
                                         >+</button>
                                     </div>
@@ -138,10 +171,10 @@ const Carrito = () => {
                                 </div>
                             ))}
                         </div>
-                        <button onClick={vaciarCarrito} className="clear-button">
+                        <button onClick={abrirModalVaciarCarrito} className="clear-button">
                             Vaciar Carrito
                         </button>
-                        <button onClick={realizarCompra} className="cta-button">
+                        <button onClick={abrirModalInformativo} className="cta-button">
                             Realizar Compra
                         </button>
                     </>

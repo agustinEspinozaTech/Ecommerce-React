@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
+import ModalInformativo from '../ModalInformativo';
 import nodisponibleImg from "../../assets/nodisponible.png";
 
 const ProductCard = ({ producto, mostrarModal }) => {
+    const [modalVisible, setModalVisible] = useState(false);
+
+    const mostrarModalInterno = () => setModalVisible(true);
+    const cerrarModal = () => setModalVisible(false);
+
     return (
         <div className="product-card">
             <img
@@ -18,7 +24,13 @@ const ProductCard = ({ producto, mostrarModal }) => {
             >
                 Ver detalles
             </button>
-            <button className="cta-button">Comprar</button>
+            <button
+                className="cta-button"
+                onClick={mostrarModalInterno}
+            >
+                Comprar
+            </button>
+            <ModalInformativo visible={modalVisible} onClose={cerrarModal} />
         </div>
     );
 };

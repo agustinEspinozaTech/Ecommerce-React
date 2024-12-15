@@ -1,9 +1,59 @@
-import React from 'react';
-import '../styles/tablaProductos.css';
+import React, { useEffect, useState } from 'react';
+import servicioProductos from '../servicios/Productos';
+import MensajeExito from '../MensajeExitoso';
+import ModalConfirmacion from '../ModalConfirmacion';
+import '../../styles/tablaProductos.css';
 
-function TablaProductos({ productos }) {
+function TablaProductos() {
+  const [productos, setProductos] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [productoSeleccionado, setProductoSeleccionado] = useState(null);
+  const [mensajeVisible, setMensajeVisible] = useState(false);
+  const [mensaje, setMensaje] = useState('');
+
+  useEffect(() => {
+    const cargarProductos = async () => {
+      try {
+        const productosObtenidos = await servicioProductos.getAll();
+        setProductos(productosObtenidos);
+      } catch (error) {
+        console.error('Error al cargar los productos:', error);
+      }
+    };
+
+    cargarProductos();
+  }, []);
+
+  const eliminarProducto = async (id) => {
+    try {
+      await servicioProductos.eliminar(id);
+      setProductos((prevProductos) => prevProductos.filter((producto) => producto.id !== id));
+      cerrarModal();
+      mostrarMensaje('Producto eliminado exitosamente');
+    } catch (error) {
+      console.error('Error al eliminar el producto:', error);
+    }
+  };
+
+  const mostrarMensaje = (mensaje) => {
+    setMensaje(mensaje);
+    setMensajeVisible(true);
+    setTimeout(() => setMensajeVisible(false), 3000);
+  };
+
+  const abrirModal = (producto) => {
+    setProductoSeleccionado(producto);
+    setModalVisible(true);
+  };
+
+  const cerrarModal = () => {
+    setProductoSeleccionado(null);
+    setModalVisible(false);
+  };
+
   return (
     <section className="tabla-section">
+      <MensajeExito mensaje={mensaje} visible={mensajeVisible} />
       <table className="tabla-productos">
         <thead>
           <tr>
@@ -20,27 +70,49 @@ function TablaProductos({ productos }) {
           </tr>
         </thead>
         <tbody>
-          {productos.map((producto, index) => (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>{producto.nombre}</td>
-              <td>{producto.precio}</td>
-              <td>{producto.stock}</td>
-              <td>{producto.marca}</td>
-              <td>{producto.categoria}</td>
-              <td>{producto.descLarga}</td>
-              <td>
-                <img src={producto.imagen} alt={producto.nombre} className="producto-imagen" />
-              </td>
-              <td>{producto.envio}</td>
-              <td>
-                <button className="btn-accion">Editar</button>
-                <button className="btn-accion">Eliminar</button>
-              </td>
+          {productos.length > 0 ? (
+            productos.map((producto) => (
+              <tr key={producto.id}>
+                <td>{producto.id}</td>
+                <td>{producto.nombre}</td>
+                <td>{producto.precio}</td>
+                <td>{producto.stock}</td>
+                <td>{producto.marca}</td>
+                <td>{producto.categoria}</td>
+                <td>{producto.descCorta}</td>
+                <td>
+                  <img
+                    src={producto.foto}
+                    alt={producto.nombre}
+                    className="producto-imagen"
+                  />
+                </td>
+                <td>{producto.envio}</td>
+                <td>
+                  <button
+                    className="btn-accion"
+                    onClick={() => abrirModal(producto)}
+                  >
+                    Eliminar
+                  </button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="10">No hay productos disponibles</td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
+
+      <ModalConfirmacion
+        visible={modalVisible}
+        titulo="Confirmación"
+        mensaje={`¿Estás seguro de que deseas eliminar el producto "${productoSeleccionado?.nombre}"?`}
+        onConfirmar={() => eliminarProducto(productoSeleccionado.id)}
+        onCancelar={cerrarModal}
+      />
     </section>
   );
 }

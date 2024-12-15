@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import "../styles/home.css";
 import "../styles/barraCarga.css";
 import servicioProductos from "../components/servicios/Productos";
@@ -8,6 +7,7 @@ import ProductCard from "../components/home/ProductCard";
 import HeroSection from "../components/home/HeroSection";
 import LoadingSpinner from "../components/home/LoadingSpinner";
 import useFetchAnuncios from "../components/home/useFetchAnuncios";
+import MensajeExito from '../components/MensajeExitoso';
 import nodisponibleImg from "../assets/nodisponible.png";
 
 const Home = () => {
@@ -15,7 +15,9 @@ const Home = () => {
     const [modalData, setModalData] = useState(null);
     const [productos, setProductos] = useState([]);
     const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
+    const [mensajeVisible, setMensajeVisible] = useState(false); 
+    const [mensaje, setMensaje] = useState(""); 
+   
 
     // Anuncios dinámicos
     const anuncios = useFetchAnuncios(servicioProductos, nodisponibleImg); 
@@ -47,6 +49,12 @@ const Home = () => {
         setModalData(null);
     };
 
+    const mostrarMensaje = (mensaje) => {
+        setMensaje(mensaje);
+        setMensajeVisible(true);
+        setTimeout(() => setMensajeVisible(false), 3000); // Desaparece después de 3 segundos
+    };
+
     // Función para agregar un producto al carrito
     const agregarAlCarrito = (producto) => {
         try {
@@ -66,7 +74,7 @@ const Home = () => {
 
             localStorage.setItem("carrito", JSON.stringify(carritoActual));
             cerrarModal();
-            navigate("/carrito");
+            mostrarMensaje("Producto agregado al carrito exitosamente");
         } catch (error) {
             console.error("Error al agregar el producto al carrito:", error);
         }
@@ -79,6 +87,7 @@ const Home = () => {
 
     return (
         <main className="home">
+             <MensajeExito mensaje={mensaje} visible={mensajeVisible} /> 
             <HeroSection anuncios={anuncios} /> 
 
 

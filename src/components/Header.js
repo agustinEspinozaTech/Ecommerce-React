@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom'; 
 import logo from '../assets/logo.jpg';
 import iniciarSesionIcon from '../assets/iniciarsesion.png';
 import carritoIcon from '../assets/carrito.png';
 import '../styles/header.css';
+import ModalInformativo from './ModalInformativo';
 
 const Header = () => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const mostrarModal = () => setModalVisible(true);
+  const cerrarModal = () => setModalVisible(false);
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault(); 
+    mostrarModal();
+  };
   return (
     <header>
       <div id="top-bar">
@@ -18,13 +27,16 @@ const Header = () => {
           </h1>
         </div>
         <div id="search-bar">
-          <form action="#">
-            <input type="text" placeholder="Buscar productos..." />
+        <form action="#" onSubmit={handleSearchSubmit}>
+            <input disabled type="text" placeholder="Buscar productos..." />
             <input type="submit" value="Buscar" />
           </form>
         </div>
         <div id="cart-icons">
-          <Link to="#">
+          <Link to="#"onClick={(e) => {
+              e.preventDefault(); 
+              mostrarModal(); 
+            }}>
             <img
               src={iniciarSesionIcon}
               alt="Iniciar Sesión"
@@ -36,7 +48,7 @@ const Header = () => {
               }}
             />
           </Link>
-          <Link to="#">
+          <Link to="/carrito">
             <img
               src={carritoIcon}
               alt="Carrito de compra"
@@ -69,6 +81,7 @@ const Header = () => {
           </li>
         </ul>
       </nav>
+      <ModalInformativo visible={modalVisible} onClose={cerrarModal} />
     </header>
   );
 };
