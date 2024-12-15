@@ -85,8 +85,9 @@ class Validaciones {
         setError(`La edad debe estar entre ${edadDesde} y 150 años.`);
         return false;
       }
-      setError('');
-      return true;
+      return !this.validacionInputEdad.test(value) || Number(value) < Number(edadDesde)
+    ? (setError(`La edad debe estar entre ${edadDesde} y 150 años.`), false)
+    : (setError(''), true);
     }
   
     static validarFoto(value, setError) {

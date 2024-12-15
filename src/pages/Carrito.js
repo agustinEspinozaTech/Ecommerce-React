@@ -136,7 +136,7 @@ const Carrito = () => {
                                         onError={(e) => (e.target.src = nodisponibleImg ? nodisponibleImg : producto.marca)}
                                     />
                                     <h4>{producto.nombre}</h4>
-                                    <p>Precio: ${producto.precio}</p>
+                                    <p>Precio: ${producto.precio.toLocaleString('es-ES')}</p>
                                     <p>Cantidad:</p>
                                     <div className="cantidad-controles">
                                         <button onClick={() => decrementarCantidad(index)}
@@ -162,7 +162,7 @@ const Carrito = () => {
                                     <p>
                                         Subtotal: $
                                         {typeof producto.subtotal === "number"
-                                            ? producto.subtotal.toFixed(2)
+                                            ? producto.subtotal.toLocaleString('es-ES')
                                             : "0.00"}
                                     </p>
                                     <button onClick={() => eliminarProducto(index)} className="delete-button">

@@ -17,7 +17,7 @@ const ProductCard = ({ producto, mostrarModal }) => {
             />
             <h4>{producto.nombre}</h4>
             <p>{producto.marca}</p>
-            <p>${producto.precio}</p>
+            <p>${producto.precio.toLocaleString('es-ES')}</p>
             <button
                 className="buy-button"
                 onClick={() => mostrarModal(producto)}

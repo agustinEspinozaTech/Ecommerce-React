@@ -1,8 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import nodisponibleImg from "../../assets/nodisponible.png";
 
 const ModalProducto = ({ modalData, cerrarModal, agregarAlCarrito }) => {
+    const [stock, setStock] = useState(0);
+
+    useEffect(() => {
+        if (modalData) {
+            setStock(Number(modalData.stock));
+        }
+    }, [modalData]);
+
     if (!modalData) return null;
+
+    const stockDisponible = stock > 0;
+
+    const handleAgregarAlCarrito = () => {
+        if (stockDisponible) {
+            agregarAlCarrito(modalData);
+            setStock((prevStock) => prevStock - 1);
+            modalData.stock = stock - 1; // Sincroniza con modalData para reflejar cambios
+        }
+    };
 
     return (
         <div className="modal" onClick={cerrarModal}>
@@ -18,25 +36,30 @@ const ModalProducto = ({ modalData, cerrarModal, agregarAlCarrito }) => {
                 <h2>{modalData.nombre}</h2>
                 <p>{modalData.descCorta}</p>
                 <p>
-                    <strong>Stock:</strong> {modalData.stock}
+                    <strong>Stock:</strong> {stock}
                 </p>
                 <p>
-                    <strong>Precio:</strong> {modalData.precio}
+                    <strong>Precio:</strong> {modalData.precio.toLocaleString('es-ES')}
                 </p>
                 <p>
                     <strong>Marca:</strong> {modalData.marca}
                 </p>
                 <p>
-                    <strong>Categoria:</strong> {modalData.categoria}
+                    <strong>Categoría:</strong> {modalData.categoria}
                 </p>
                 <button
-                    className="carrito"
+                    className={`carrito ${!stockDisponible ? "disabled" : ""}`}
+                    style={
+                        { opacity: stockDisponible ? "1" : "0.6" }
+                    }
                     onClick={(e) => {
-                        e.stopPropagation(); // Evita cerrar el modal al hacer click
-                        agregarAlCarrito(modalData);
+                        e.stopPropagation();
+                        handleAgregarAlCarrito();
                     }}
+                    disabled={!stockDisponible}
+
                 >
-                    Agregar al carrito
+                    {stockDisponible ? "Agregar al carrito" : "Sin stock"}
                 </button>
             </div>
         </div>

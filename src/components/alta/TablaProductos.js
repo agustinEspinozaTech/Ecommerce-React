@@ -87,7 +87,7 @@ function TablaProductos() {
                     className="producto-imagen"
                   />
                 </td>
-                <td>{producto.envio}</td>
+                <td>{producto.envio? 'Envío sin cargo' : 'Envío con cargo'}</td>
                 <td>
                   <button
                     className="btn-accion"
@@ -108,8 +108,8 @@ function TablaProductos() {
 
       <ModalConfirmacion
         visible={modalVisible}
-        titulo="Confirmación"
-        mensaje={`¿Estás seguro de que deseas eliminar el producto "${productoSeleccionado?.nombre}"?`}
+        titulo="Confirmar"
+        mensaje={`¿Estás seguro que deseas eliminar el producto "${productoSeleccionado?.nombre}"?`}
         onConfirmar={() => eliminarProducto(productoSeleccionado.id)}
         onCancelar={cerrarModal}
       />
