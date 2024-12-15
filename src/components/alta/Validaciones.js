@@ -82,7 +82,7 @@ class Validaciones {
   
     static validarEdadHasta(value, setError, edadDesde) {
       if (!this.validacionInputEdad.test(value) || Number(value) < Number(edadDesde)) {
-        setError(`La edad debe estar entre ${edadDesde} y 150 años.`);
+        setError(`La edad debe estar entre ${edadDesde || '18'} y 150 años.`);
         return false;
       }
       return !this.validacionInputEdad.test(value) || Number(value) < Number(edadDesde)
