@@ -59,7 +59,7 @@ const Home = () => {
     const agregarAlCarrito = (producto) => {
         try {
             const carritoActual = JSON.parse(localStorage.getItem("carrito")) || [];
-            const productoExistente = carritoActual.find((item) => item.id === producto.id);
+            const productoExistente = carritoActual.find((item) => item._id === producto._id);
 
             if (productoExistente) {
                 productoExistente.cantidad += 1;
@@ -96,7 +96,7 @@ const Home = () => {
                 <div className="product-grid">
                     {productos.map((producto) => (
                         <ProductCard 
-                            key={producto.id}
+                            key={producto._id}
                             producto={producto}
                             mostrarModal={mostrarModal}
                         />

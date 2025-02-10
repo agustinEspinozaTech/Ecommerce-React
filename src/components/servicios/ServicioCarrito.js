@@ -1,12 +1,21 @@
-import axios from "axios"
-
-const url = 'https://674d057354e1fca9290e174c.mockapi.io/pedidos/'
+import axios from "axios";
 
 
-const enviar = async pedido => (await axios.post(url, pedido)).data
+const url = 'http://localhost:3000/api/carrito/';
+
+const enviar = async (pedido) => {
+
+  try {
+    const response = await axios.post(url, pedido);
+    return response.data;
+  } catch (error) {
+    console.error("Error al enviar el pedido:", error);
+    throw error;
+  }
+};
 
 const servicioCarrito = {
-    enviar
-}
+  enviar,
+};
 
-export default servicioCarrito
+export default servicioCarrito;

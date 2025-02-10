@@ -1,18 +1,38 @@
-import axios from "axios"
+import axios from "axios";
 
-const url = 'https://674d057354e1fca9290e174c.mockapi.io/productos/'
-const getAll = async () => (await axios.get(url)).data
-const guardar = async prod => (await axios.post(url, prod)).data
-const actualizar = async (id, prod) => (await axios.put(url + id, prod)).data
-const eliminar = async id => (await axios.delete(url + id)).data
-const productos = await getAll();
-console.log('ver productos', productos);
+// Actualiza la URL base para apuntar a tu backend local
+const url = 'http://localhost:3000/api/productos/';
+
+// Función para obtener todos los productos
+const getAll = async () => {
+  const response = await axios.get(url);
+  return response.data;
+};
+
+// Función para guardar (crear) un producto
+const guardar = async prod => {
+  const response = await axios.post(url, prod);
+  return response.data;
+};
+
+// Función para actualizar un producto dado su ID
+const actualizar = async (id, prod) => {
+  const response = await axios.put(url + id, prod);
+  return response.data;
+};
+
+// Función para eliminar un producto dado su ID
+const eliminar = async id => {
+  const response = await axios.delete(url + id);
+  return response.data;
+};
 
 const servicioProductos = {
-    getAll,
-    guardar,
-    actualizar,
-    eliminar
-}
+  getAll,
+  guardar,
+  actualizar,
+  eliminar
+};
 
-export default servicioProductos
+
+export default servicioProductos;

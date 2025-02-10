@@ -109,17 +109,14 @@ function Alta() {
     if (!Validaciones.validarFoto(foto, setFotoError)) formIsValid = false;
     if (formIsValid) {
       const nuevoProducto = {
-        nombre: nombre,
-        precio: parseFloat(precio),
-        stock: stock,
-        marca: marca,
-        categoria: categoria,
-        descCorta: descCorta,
-        descLarga: descLarga,
-        envio: envio ? 'Envío sin cargo' : 'Envío con cargo',
-        edadDesde: edadDesde,
-        edadHasta: edadHasta,
-        foto: foto,
+        nombre,
+        precio, 
+        stock, 
+        marca,
+        categoria,
+        descCorta,
+        envio, 
+        foto,
       };
 
       try {

@@ -24,10 +24,10 @@ function TablaProductos() {
     cargarProductos();
   }, []);
 
-  const eliminarProducto = async (id) => {
+  const eliminarProducto = async (_id) => {
     try {
-      await servicioProductos.eliminar(id);
-      setProductos((prevProductos) => prevProductos.filter((producto) => producto.id !== id));
+      await servicioProductos.eliminar(_id);
+      setProductos((prevProductos) => prevProductos.filter((producto) => producto._id !== _id));
       cerrarModal();
       mostrarMensaje('Producto eliminado exitosamente');
     } catch (error) {
@@ -72,8 +72,8 @@ function TablaProductos() {
         <tbody>
           {productos.length > 0 ? (
             productos.map((producto) => (
-              <tr key={producto.id}>
-                <td>{producto.id}</td>
+              <tr key={producto._id}>
+                <td>{producto._id}</td>
                 <td>{producto.nombre}</td>
                 <td>${producto.precio.toLocaleString('es-ES')}</td>
                 <td>{producto.stock}</td>
@@ -110,7 +110,7 @@ function TablaProductos() {
         visible={modalVisible}
         titulo="Confirmar"
         mensaje={`¿Estás seguro que deseas eliminar el producto "${productoSeleccionado?.nombre}"?`}
-        onConfirmar={() => eliminarProducto(productoSeleccionado.id)}
+        onConfirmar={() => eliminarProducto(productoSeleccionado._id)}
         onCancelar={cerrarModal}
       />
     </section>

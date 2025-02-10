@@ -18,7 +18,7 @@ const ModalProducto = ({ modalData, cerrarModal, agregarAlCarrito }) => {
         if (stockDisponible) {
             agregarAlCarrito(modalData);
             setStock((prevStock) => prevStock - 1);
-            modalData.stock = stock - 1; // Sincroniza con modalData para reflejar cambios
+            modalData.stock = stock - 1; 
         }
     };
 
